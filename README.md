@@ -9,11 +9,7 @@
         - Cloud service deployment (GCP, AWS)
         - Validate builds and pushes 
 
-- Author: 
-    - lj2liu@uwaterloo.ca
 
-- ChatGPT 4o assistance in: 
-    -  Readme proofreading. 
 
 ## Development from scratch (without cloning)
 
@@ -22,11 +18,11 @@
 brew install kubectl   
 
 
-### k8s 
+### k8s > Helm > Helmfile/ ArgoCD
 
 0. K8s Quick Guide:
 Assume all images have been built, configuration for extra "customization" is done via configuration (or from image's perspective, driven by container's env var).Thus, K8s focuses on deining distributed containerizations, enabling image, container and load balancing at cluster level.
-Thus, in a k8s manifest, we have the following catagory: Pod (i.e., container level), Deployment + ReplicaSet (i.e., replications of pod), StatefulSet (Pod ID management), Running Jobs (i.e.,at pod level, purpose is to track if desired state is achieved, if not, define kill or rety logic with the follwoing)- Job, CronJob, DaemonSet 
+Thus, in a k8s manifest, we have the following catagory [2]: Pod (i.e., container level), Deployment + ReplicaSet (i.e., replications of pod), StatefulSet (Pod ID management), Running Jobs (i.e.,at pod level, purpose is to track if desired state is achieved, if not, define kill or rety logic with the follwoing)- Job, CronJob, DaemonSet 
     - Namespace- [1]
      Kubernetes namespace 
     - Configmap are can be mounted like data volumes[4]:
@@ -56,10 +52,13 @@ Helm chart orchestrates k8s manifests (i.e., multiple pods specs), enabling imag
 
 
 
-
 3. Helmfile- Centralize helm chart for release-name and chart-name (warning: use with caution)
-brew install helmfile
+One Helm chart may contain tightly coupled pipelines. Yet, loosely coupled pipelines may have specific infra logics such as 
+- ENV Var 
+- dependency 
+etc to be coordinated by helm chart release schedule and/ or injected script var on helm chart for orchestration.  
 
+brew install helmfile
 helmfile apply
 
 4. ArgoCD [3]- Alternative to Helmfile  but update my cluster with git push helm chart (using ArgoCD Application)
@@ -85,7 +84,14 @@ helm install prometheus prometheus-community/prometheus
 
 Kube cluster terms
 [1]https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ 
-https://kubernetes.io/docs/concepts/architecture/ 
-
+[2]https://kubernetes.io/docs/concepts/architecture/ 
 [3]https://argo-cd.readthedocs.io/en/stable/ 
 [4]https://kubernetes.io/docs/concepts/configuration/configmap/ 
+
+
+
+- Author: 
+    - lj2liu@uwaterloo.ca
+
+- ChatGPT 4o assistance in: 
+    -  Readme proofreading. 
