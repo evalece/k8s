@@ -23,22 +23,35 @@ minikube start --driver=docker
 ### k8s > Helm > Helmfile/ ArgoCD
 
 0. K8s Quick Guide:
-Assume all images have been built, configuration for extra "customization" is done via configuration (or from image's perspective, driven by container's env var).Thus, K8s focuses on deining distributed containerizations, enabling image, container and load balancing at cluster level.
-Thus, in a k8s manifest, we have the following catagory [2]: Pod (i.e., container level), Deployment + ReplicaSet (i.e., replications of pod), StatefulSet (Pod ID management), Running Jobs (i.e.,at pod level, purpose is to track if desired state is achieved, if not, define kill or rety logic with the follwoing)- Job, CronJob, DaemonSet 
-    - Namespace- [1]
-     Kubernetes namespace 
-    - Configmap are can be mounted like data volumes[4]:
-        - Basically apply a configMap pod to accept mounted files 
-        - shortcut kubectl create configmap my-config --from-file=config.json
-        kubectl create configmap my-config --from-file=config.json -n namespace_tag
+K8s focuses on defining distributed containerizations, enabling image, container and load balancing at cluster level, and assumes all images have been built, with configuration for extra "customization" is done via configuration (or from image's perspective, driven by container's env var).
+
+Thus, in a k8s manifest, we have the following catagory: 
+- Pod 
+    - Smallest units of K8s
+    - Holds one or more images
+    - (i.e., container level)
+- Deployment + ReplicaSet
+    - (i.e., replications of pod)
+- StatefulSet (Pod ID management)
+- Running Jobs 
+    - Job, CronJob, DaemonSet 
+    - (i.e.,at pod level, purpose is to track if desired state is achieved, if not, define kill or rety logic with the follwoing)
+
+Organizing the K8s Cluster 
+- Namespace- [1]
+    Kubernetes namespace 
+- Configmap are can be mounted like data volumes[4]:
+    - Basically apply a configMap pod to accept mounted files 
+    - shortcut kubectl create configmap my-config --from-file=config.json
+    kubectl create configmap my-config --from-file=config.json -n namespace_tag
 
 
 1. Apply Helm to enable automation on k8s compose
 Helm chart orchestrates k8s manifests (i.e., multiple pods specs), enabling image and k8s resources modifications
-    - 1. Create k8s work directory with Helm     
-    - 2. helm create k8s
-    - 3. helm template myapp ./my-chart -f values.yaml > rendered.yaml
-    - 4. kubectl apply -f rendered.yaml
+- 1. Create k8s work directory with Helm     
+- 2. helm create k8s
+- 3. helm template myapp ./my-chart -f values.yaml > rendered.yaml
+- 4. kubectl apply -f rendered.yaml
 
 
 2. How-to
@@ -58,7 +71,7 @@ Helm chart orchestrates k8s manifests (i.e., multiple pods specs), enabling imag
 One Helm chart may contain tightly coupled pipelines. Yet, loosely coupled pipelines may have specific infra logics such as 
 - ENV Var 
 - dependency 
-etc to be coordinated by helm chart release schedule and/ or injected script var on helm chart for orchestration.  
+... etc to be coordinated by helm chart release schedule and/ or injected script var on helm chart for orchestration.  
 
 brew install helmfile
 helmfile apply
