@@ -46,40 +46,37 @@ Organizing the K8s Cluster
     kubectl create configmap my-config --from-file=config.json -n namespace_tag
 
 
-1. Apply Helm to enable automation on k8s compose
-Helm chart orchestrates k8s manifests (i.e., multiple pods specs), enabling image and k8s resources modifications
-- 1. Create k8s work directory with Helm     
-- 2. helm create k8s
-- 3. helm template myapp ./my-chart -f values.yaml > rendered.yaml
-- 4. kubectl apply -f rendered.yaml
+1. Apply Helm to enable automation on k8s compose Helm chart orchestrates k8s manifests (i.e., multiple pods specs), enabling image and k8s resources modifications
+    - Create k8s work directory with Helm     
+    - helm create k8s
+    - helm template myapp ./my-chart -f values.yaml > rendered.yaml
+    - kubectl apply -f rendered.yaml
 
 
 2. How-to
-    - 0. start with helm gen. dir (1) or a desinated dir with (2)
-        - 1. helm install my-app ./my-chart
-        - 2. helm install my-app ./my-chart
+    - start with helm gen. dir (1) or a desinated dir with (2)
+        - helm install my-app ./my-chart
+        - helm install my-app ./my-chart
 
-    - 1. template to create k8s manifests for declarative assignment (i.e. define desired state of k8s cluster) 
-    - 2. Chart.yaml to keep track on all release-names and chart-names 
-    - 3. values.yaml for k8s resources spec
+    -  template to create k8s manifests for declarative assignment (i.e. define desired state of k8s cluster) 
+    -  Chart.yaml to keep track on all release-names and chart-names 
+    -  values.yaml for k8s resources spec
 
     helm install myapp ./my-chart -f values.yaml
 
 
 
-3. Helmfile- Centralize helm chart for release-name and chart-name (warning: use with caution)
-One Helm chart may contain tightly coupled pipelines. Yet, loosely coupled pipelines may have specific infra logics such as 
-- ENV Var 
-- dependency 
-... etc to be coordinated by helm chart release schedule and/ or injected script var on helm chart for orchestration.  
+3. Helmfile- Centralize helm chart for release-name and chart-name (warning: use with caution). One Helm chart may contain tightly coupled pipelines. Yet, loosely coupled pipelines may have specific infra logics such as 
+    - ENV Var 
+    - dependency 
+    ... etc to be coordinated by helm chart release schedule and/ or injected script var on helm chart for orchestration.  
 
 brew install helmfile
 helmfile apply
 
 4. ArgoCD [3]- Alternative to Helmfile  but update my cluster with git push helm chart (using ArgoCD Application)
+    -  Create argocd namespace[3] 
 
-    -  Create argocd namespace
-[3]
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
@@ -97,11 +94,11 @@ helm install prometheus prometheus-community/prometheus
 
 ## Reference
 
-Kube cluster terms
-- [1]https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ 
-- [2]https://kubernetes.io/docs/concepts/architecture/ 
-- [3]https://argo-cd.readthedocs.io/en/stable/ 
-- [4]https://kubernetes.io/docs/concepts/configuration/configmap/ 
+
+ [1]https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ 
+ [2]https://kubernetes.io/docs/concepts/architecture/ 
+ [3]https://argo-cd.readthedocs.io/en/stable/ 
+ [4]https://kubernetes.io/docs/concepts/configuration/configmap/ 
 
 
 
