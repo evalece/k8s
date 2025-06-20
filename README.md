@@ -20,7 +20,12 @@ brew install minikube
 brew install kubectl   
 minikube start --driver=docker
 
-### k8s > Helm > Helmfile/ ArgoCD
+### Going from smaller bits to the tools that orchestrate them k8s > Helm > Helmfile/ ArgoCD
+Mindmap: 
+k8s > Helm > Helmfile/ ArgoCD
+Key idea: 
+Everything is declarative, but the cluster has configurable mechanicsm to ensure the "desirable state" is met. Yet, tracking cluster and system health is still on us! 
+
 
 0. K8s Quick Guide:
 K8s focuses on defining distributed containerizations, enabling image, container and load balancing at cluster level, and assumes all images have been built, with configuration for extra "customization" is done via configuration (or from image's perspective, driven by container's env var).
@@ -75,6 +80,7 @@ brew install helmfile
 helmfile apply
 
 4. ArgoCD [3]- Alternative to Helmfile  but update my cluster with git push helm chart (using ArgoCD Application)
+    - To be deployed an image in K8s cluster and is given a repo to watch for changes 
     -  Create argocd namespace[3] 
 
 kubectl create namespace argocd
