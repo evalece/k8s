@@ -98,10 +98,10 @@ helm install prometheus prometheus-community/prometheus
 ## Reference
 
 Kube cluster terms
-[1]https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ 
-[2]https://kubernetes.io/docs/concepts/architecture/ 
-[3]https://argo-cd.readthedocs.io/en/stable/ 
-[4]https://kubernetes.io/docs/concepts/configuration/configmap/ 
+- [1]https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ 
+- [2]https://kubernetes.io/docs/concepts/architecture/ 
+- [3]https://argo-cd.readthedocs.io/en/stable/ 
+- [4]https://kubernetes.io/docs/concepts/configuration/configmap/ 
 
 
 
