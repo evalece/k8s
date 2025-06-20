@@ -1,7 +1,8 @@
-# The K8s Repo
+# The K8s DevOps Pipeline: Helm, Helmfile, ArgoCD, and Minikube Demo
+
 
 - Purpose:
-    - A quick demo for K8s and Cloud service deployment with industry DevOps CD/CI operations 
+    - A quick infrastructure demo showcasing K8s and Cloud service deployment with industry DevOps CD/CI operations with Docker, GitHub Actions, Helm, Helmfile, and ArgoCD (and will go from minikube to k8s) with docuemtned notes
 
 - What It Does:
     - Lints and builds container images (Docker + GitHub Actions) 
@@ -14,9 +15,10 @@
 ## Development from scratch (without cloning)
 
 ### Minikube 
-
+brew install minikube
+### K8s
 brew install kubectl   
-
+minikube start --driver=docker
 
 ### k8s > Helm > Helmfile/ ArgoCD
 
