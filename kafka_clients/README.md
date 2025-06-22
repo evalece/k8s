@@ -1,0 +1,51 @@
+
+# Kafka clients are data producers and consumers
+
+```bash 
+go run ./producer/producer.go
+```
+
+
+# Init producer:
+
+```bash 
+go mod init kafkatest
+go get github.com/segmentio/kafka-go
+```
+# and consumer in Golang:
+
+# broker setting:
+
+```bash 
+KAFKA_BROKER_ID=1
+KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
+KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://broker1:9092
+```
+
+## Notes
+
+- Define client connection mode
+    - Terms: 
+        - Listeners: broker as listener by binding to a listening port, thus, one KAFKA_LISTENERS per broker (broker ~= node)
+        - Advertised Listeners: downstream client as listener, broker instructs connecition by returning URL
+    - Host connection
+    - Docker conenctions (via Docker network, see reference image[1])
+
+       
+      # Configure listeners for both docker and host communication
+      ```bash 
+    environment:
+      KAFKA_LISTENERS: CONTROLLER://localhost:9091,HOST://0.0.0.0:9092,DOCKER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: HOST://localhost:9092,DOCKER://kafka:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,DOCKER:PLAINTEXT,HOST:PLAINTEXT
+      ```
+
+           # Listener to use for broker-to-broker communication
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER
+
+
+- Listen to K. Brokers
+    - client got URLs to retrieve or post messages 
+
+## Ref 
+ [1]https://docs.docker.com/guides/kafka/ 
