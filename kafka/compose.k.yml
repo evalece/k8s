@@ -1,5 +1,7 @@
+# docker compose -f compose.k.yml up 
 version: '2'
 services:
+
   kafka:
     image: apache/kafka-native
     ports:
