@@ -19,7 +19,7 @@ func main() {
 		Balancer: &kafka.LeastBytes{},
 	})
 
-	// Send 10 messages
+https://kafka.apache.org/23/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html	// Send 10 messages
 	for i := 0; i < 10; i++ {
 		msg := kafka.Message{
 			Key:   []byte(fmt.Sprintf("traceID%d", i)),
