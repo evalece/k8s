@@ -1,0 +1,44 @@
+# Kick Start on KEDA locally with Minikube
+
+- Note that KEDA is a K8s built-in feature and should co-ordinate with provisioning in CI/CD pipelies 
+- Side note on tools differentiations
+    - Provisioning - configuring software 
+        - Tools example : Terraform, Ansible, ArgoCD
+    - Auto Scaling - Scaling up and down either horizontally or vertically, in KEDA's case, horizotally. 
+        - K8s
+            - Scale on pre-configured logics based on thresold 
+            - Event-driven; using metrics to drive auto scaling 
+            - scale on pods 
+            - note that booting and shooting off mircroservice takes time
+
+- Our Tech stack -Prometheus, Prometheus client, Graphana 
+    - Prometheus
+        - DB on cluster
+        - handles requests on scape frequency 
+        - outputs metrics 
+        - our case: posting logs via client API 
+            - designated where a watched out log is
+
+## Steps
+
+- 1. Setup controllers and install if needed 
+    - 1. Deploy Controller 
+
+
+- 2. Deploy mircroservice
+    - assign logs (customized)
+    - prototype image: prometheus_client
+
+- 3. CRDs setup-configuring driving events, auto-scaling target and thresold
+    - ScaledObjects and ScaledJobs
+    - Configure ScaledObject
+
+    
+    
+### Definitions     
+    - ScaledObject
+        - Defining monitoring targets for KEDA 
+        - ...and scaling targets for deployment with assigned thresold
+    
+
+    
