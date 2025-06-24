@@ -14,6 +14,15 @@
 
 ## Development from scratch (without cloning)
 
+- Core concepts around toolings
+    - Autoscaling
+        - KEDA; Built-in in K8s
+            - uses metrics as event-trigger
+            - Recommend: Debug with downstream error log + low trigger amount 
+            - need special handling when CI/CD conflicts with autoscaling
+    - Provisioning, CI/CD
+        - Tools: k8s-> Helm -> Terraform -> ArgoCD
+
 ### Minikube 
 brew install minikube
 ### K8s

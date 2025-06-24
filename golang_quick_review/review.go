@@ -153,7 +153,7 @@ OOP {
 		Age int
 		Language string
 
-	}
+	} 
 		
 		// instantiate of struct; no inheritance, use "composition instead", serve more like a protobuff to define data type
 			//  composition vs extend ref: https://www.digitalocean.com/community/tutorials/composition-vs-inheritance
