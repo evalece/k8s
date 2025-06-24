@@ -2,7 +2,9 @@
 
 
 - Purpose:
+    - Focuses on KEDA challenges (i.e., threshold logic- to avoid frequent scaleup and down with unnessary surges or spikes)
     - A quick infrastructure demo showcasing K8s and Cloud service deployment with industry DevOps CD/CI operations with Docker, GitHub Actions, Helm, Helmfile, and ArgoCD (and will go from minikube to k8s) with docuemtned notes
+    
 
 - What It Does:
     - Lints and builds container images (Docker + GitHub Actions) 
@@ -36,7 +38,7 @@ Key idea:
 Everything is declarative, but the cluster has configurable mechanicsm to ensure the "desirable state" is met. Yet, tracking cluster and system health is still on us! 
 
 
-0. K8s Quick Guide:
+- K8s Quick Guide:
 K8s focuses on defining distributed containerizations, enabling image, container and load balancing at cluster level, and assumes all images have been built, with configuration for extra "customization" is done via configuration (or from image's perspective, driven by container's env var).
 
 Thus, in a k8s manifest, we have the following catagory: 
