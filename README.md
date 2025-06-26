@@ -41,6 +41,12 @@ Everything is declarative, but the cluster has configurable mechanicsm to ensure
 - K8s Quick Guide:
 K8s focuses on defining distributed containerizations, enabling image, container and load balancing at cluster level, and assumes all images have been built, with configuration for extra "customization" is done via configuration (or from image's perspective, driven by container's env var).
 
+- K8s & VMs
+    - Idea: 
+        - Allow distributed nodes (if not native to desired Arch, run VM) to connect to K8s API server
+        - Pass service manifests, k8s metadata to k8s. 
+        - Leave node managements to K8s. 
+
 Thus, in a k8s manifest, we have the following catagory: 
 - Pod 
     - Smallest units of K8s
