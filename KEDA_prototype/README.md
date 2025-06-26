@@ -68,6 +68,7 @@
         - Pods
             - Owns their own IP
     - Services: IP management of Pods, using grouping service grouping logics (i.e, Backend vs Frontend)
+        - ex: pods listening on one endpoint, 
         - Endpont definition: usually pods
         - pod access policy
         - Use Selector(optional) to manage a set of pods
