@@ -1,0 +1,11 @@
+replicaCount: 1
+
+image:
+  repository: datapull
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  port: 8066
+
+containerPort: 8066
