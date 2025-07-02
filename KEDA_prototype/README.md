@@ -63,12 +63,15 @@
         - https://docs.docker.com/build/building/export/ 
   
 
-- Manifests  https://kubernetes.io/docs/concepts/services-networking/service/ 
+- Manifests  https://kubernetes.io/docs/concepts/services-networking/service/  
+    - recall k8s Arch:  https://kubernetes.io/docs/concepts/architecture/ 
     - Development: Pod create or delete
         - Pods
             - Owns their own IP
     - Services: IP management of Pods, using grouping service grouping logics (i.e, Backend vs Frontend)
-        - ex: pods listening on one endpoint, 
+        - ex: pods listening on one endpoint
+            - define endpoint in service
+            - k8s tracks
         - Endpont definition: usually pods
         - pod access policy
         - Use Selector(optional) to manage a set of pods
