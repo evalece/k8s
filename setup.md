@@ -1,3 +1,10 @@
+#### If at anytime local cluster becomes too heavy... 
+
+```bash
+minikube pause
+```
+
+
 1. Start minikube at a terminal
 ```bash 
 minikube start
@@ -54,4 +61,31 @@ echo $DOCKER_HOST
 eval $(minikube docker-env -u)
 ```
 
-5.
+5. Create k8s manifest for the Docker image 
+- for example:
+KEDA_prototype/log-generator.yml 
+- Mannually applying the manifest:
+```bash
+kubectl apply -f log-generator.yaml
+```
+
+If already exist:
+```bash
+kubectl delete -f log-generator.yaml
+```
+- Consider Automation: 
+```bash
+cd KEDA_prototype/helm_log-gen
+
+helm install loggen .   # "loggen" is the release name
+helm upgrade loggen . # if changes
+helm uninstall loggen # if do not want 
+
+```
+
+- To check if the service is up 
+```bash 
+kubectl get svc
+```
+  
+
