@@ -33,6 +33,14 @@ kubectl delete crd cloudeventsources.eventing.keda.sh \
     triggerauthentications.keda.sh
 ```
 
+- Check
+```bash
+helm list -A
+#or 
+kubectl get pods -n keda
+
+```
+
 ###### Creating a log generator Docker Image and Container ####
 
 4. Create dockerfile on metric generator. 
@@ -87,5 +95,53 @@ helm uninstall loggen # if do not want
 ```bash 
 kubectl get svc
 ```
-  
 
+
+
+#### Deploy Prometheus (Prom) to catch loggen output (check pod, cluster and cloud networking https://medium.com/google-cloud/understanding-kubernetes-networking-pods-7117dd28727 )
+# Summary: in K8s cluster, each node has a bridge network holding a router gateway for overlaying logics. 
+# The following implementation assumes no network restriction and Prom is able to find Loggen's IP by consulting K8s's DNS (the Core DNS).
+# Need to check later: Not sure how namespace will impact DNS efficiency 
+- install
+```bash 
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+
+helm install prometheus prometheus-community/prometheus \
+  --namespace monitoring --create-namespace
+```
+- check 
+```bash
+kubectl get pods -n monitoring
+```
+- Hook loggen to output to Prom as upstream 
+
+
+
+
+
+
+
+
+
+
+#### Configuring Auto scaling for KEDA
+
+- see  https://keda.sh/docs/2.15/reference/scaledobject-spec/ , note Horizontal Pod Autoscaler= (HPA)
+```bash
+KEDA_prototype/KEDA_scale/scaledobject.yaml 
+kubectl apply -f scaledobject.yaml
+```
+
+- Observe auto scaling
+
+```bash
+kubectl get hpa
+kubectl get pods -w
+
+```
+
+
+### Question for later
+
+1. Will namespace impact CoreDNS efficiency? 
