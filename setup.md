@@ -2,8 +2,31 @@
 
 ```bash
 minikube pause
+minikube unpause
 ```
 
+### Quick Commands Tips to Check Services ###
+
+1. K8s Service API endpoints
+```Bash
+kubectl get services
+kubectl get svc --all-namespaces
+
+```
+
+2. Mapping Host port to Service API endpoint port
+
+- After 1. check if API server exists
+``bash
+kubectl get <svc/pod/development> -n <namespace>
+```
+- Forward localhost port with 1 info
+```Bash
+kubectl port-forward -n <namespace> <svc/pod/development>/name <local_port>:<target_port>  
+
+```
+
+### Access 
 
 1. Start minikube at a terminal
 ```bash 
@@ -110,16 +133,19 @@ helm repo update
 helm install prometheus prometheus-community/prometheus \
   --namespace monitoring --create-namespace
 ```
-- check 
+- check minikube see all services
 ```bash
 kubectl get pods -n monitoring
 ```
 - Hook loggen to output to Prom as upstream 
 
 
+#### Accessing Prom from localhost
 
-
-
+```bash
+kubectl get svc -n monitoring 
+kubectl port-forward -n monitoring svc/prometheus-server 4080:80
+```
 
 
 
@@ -139,6 +165,10 @@ kubectl apply -f scaledobject.yaml
 kubectl get hpa
 kubectl get pods -w
 
+```
+- Checking 
+```bash
+http://localhost:4080/targets
 ```
 
 

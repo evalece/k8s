@@ -15,5 +15,5 @@ ENTRYPOINT ["/app/dataPull"]
 
 # docker tag <IMAGE ID > datapull-app:latest
 
-# in case we want to listen from external 
+# 
 EXPOSE 8066 

@@ -11,9 +11,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
-var (
+var ( 
 	queueBacklog = prometheus.NewGauge(prometheus.GaugeOpts{ //a value at a specific moment (like CPU usage or queue size)
-		Name: "queue_backlog_total", // meta data
+		Name: "queue_backlog_total", // meta data, but later recommended protobuf 
 		Help: "Number of tasks currently in the backlog queue",
 	})
 )
@@ -31,9 +31,12 @@ func main() {
 			time.Sleep(5 * time.Second) // repeat every 5 sec
 		}
 	}()
-
-	http.Handle("/metrics", promhttp.Handler())
-	port := 8066 //Client "Pushes data to Prom; as defined on the PromQL arrow  https://prometheus.io/docs/introduction/overview/ 
-	log.Printf("Listening on :%d", port)
+	// 
+	// http.Handle("/metrics", promhttp.HandlerFor(reg, promhttp.HandlerOpts{Registry: reg})) 
+	
+	// https://pkg.go.dev/github.com/prometheus/client_golang/prometheus 
+	http.Handle("/metrics", promhttp.Handler())  // Handler: render in prom's pre-defined format at /metrics endpoint 
+	port := 8066 // later make known to prom in prom's manifest 
+	//log.Printf("Listening on :%d", port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }
