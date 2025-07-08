@@ -1,5 +1,6 @@
 # The K8s DevOps Pipeline: Helm, Helmfile, ArgoCD, and Minikube Demo
 
+![backlog] (images/loggen2.png)
 
 - Purpose:
     - Focuses on KEDA challenges (i.e., threshold logic- to avoid frequent scaleup and down with unnessary surges or spikes)

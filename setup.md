@@ -192,6 +192,20 @@ http://localhost:4080/targets
 ```
 
 
+#### Visualization of Grafana on Prom <=> Target
+1. Forward port
+```bash
+kubectl port-forward svc/kube-prom-stack-grafana  -n monitoring 3000:80
+```
+2. login with 
+```bash
+admin 
+prom-operator
+```
+3. Check the following and load dashboard 
+/Grafana_dashboard
+
+
 ### Questions for later
 
 1. Will namespace impact CoreDNS efficiency? 
