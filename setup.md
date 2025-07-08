@@ -64,7 +64,7 @@ kubectl get pods -n keda
 
 ```
 
-###### Creating a log generator Docker Image and Container ####
+### Creating a log generator Docker Image and Container 
 
 4. Create dockerfile on metric generator. 
 Side note on port routings:
@@ -133,41 +133,24 @@ http://localhost:8066/metrics
 # Need to check later: Not sure how namespace will impact DNS efficiency 
 
 # Prom client: Handler at loggen code, ensuring prom formatting and API endpoint for prom
+
+# Updated: Simplified because Prom has k8s native package
 - 1. create a helm repo 
-```bash 
-helm create prometheus
-```
 
+- 2. Helm install Prom, then pull values
 
-#### -----Replace the following -------------------------------------------------------------------------------------------####
-# Prom polling: 
-- install
 ```bash 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update
-
-helm install prometheus prometheus-community/prometheus \
+helm show values prometheus-community/kube-prometheus-stack > prometheus/values.yaml
+```
+- 3. Install with customed value.yml
+```bash
+helm install kube-prom-stack prometheus-community/kube-prometheus-stack \
+  -f KEDA_prototype/prometheus/customized.yaml \
   --namespace monitoring --create-namespace
-- check minikube see all services
-```bash
-kubectl get pods -n monitoring
-```
-- Hook loggen to output to Prom as upstream 
-
-see:
-KEDA_prototype/helm_log-gen/templates/servicemonitor.yml 
-
-- Do either of the following to either upgrade the settintg with Helm or download the setting on to cluster:
-```bash
-#helm upgrade loggen ./<path to helm ditrectory> --namespace monitoring
-helm upgrade loggen ./KEDA_prototype/helm_log-gen --namespace monitoring
-
-# or
-helm upgrade --install loggen ./<path to helm ditrectory> --namespace monitoring
-
 ```
 
-#### ------------------------------------------------------------------------------------------------####
+
 
 #### Accessing Prom from localhost
 
