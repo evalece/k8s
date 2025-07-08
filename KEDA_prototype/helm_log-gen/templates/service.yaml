@@ -1,10 +1,16 @@
+# Services: 
+#  Pod networking and endpoint management: port mapping, selector and match label defintions. 
+# since service use the same port, thus, load balances on track
+
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Values.service.name }} 
 spec:
   selector:
-    app: {{ .Release.Name }}
+    app: {{ .Values.service.name }} 
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.containerPort }}
+    - port: {{ .Values.service.port }}      
+      targetPort: {{ .Values.container.port }}   # container port
+  type: ClusterIP      # defined port<-> targetPort mapping type; others: NodePort (nodes on static IP) ,  Loadbalancer, ExternalName

@@ -118,13 +118,29 @@ helm uninstall loggen # if do not want
 ```bash 
 kubectl get svc
 ```
+- Map to local port  to access localhost:8066
+```bash 
+kubectl port-forward svc/loggen 8066:8066
+http://localhost:8066/metrics
 
-
+```
 
 #### Deploy Prometheus (Prom) to catch loggen output (check pod, cluster and cloud networking https://medium.com/google-cloud/understanding-kubernetes-networking-pods-7117dd28727 )
-# Summary: in K8s cluster, each node has a bridge network holding a router gateway for overlaying logics. 
+# Summary: 
+
+# In K8s cluster, each node has a bridge network holding a router gateway for overlaying logics. 
 # The following implementation assumes no network restriction and Prom is able to find Loggen's IP by consulting K8s's DNS (the Core DNS).
 # Need to check later: Not sure how namespace will impact DNS efficiency 
+
+# Prom client: Handler at loggen code, ensuring prom formatting and API endpoint for prom
+- 1. create a helm repo 
+```bash 
+helm create prometheus
+```
+
+
+#### -----Replace the following -------------------------------------------------------------------------------------------####
+# Prom polling: 
 - install
 ```bash 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -132,13 +148,26 @@ helm repo update
 
 helm install prometheus prometheus-community/prometheus \
   --namespace monitoring --create-namespace
-```
 - check minikube see all services
 ```bash
 kubectl get pods -n monitoring
 ```
 - Hook loggen to output to Prom as upstream 
 
+see:
+KEDA_prototype/helm_log-gen/templates/servicemonitor.yml 
+
+- Do either of the following to either upgrade the settintg with Helm or download the setting on to cluster:
+```bash
+#helm upgrade loggen ./<path to helm ditrectory> --namespace monitoring
+helm upgrade loggen ./KEDA_prototype/helm_log-gen --namespace monitoring
+
+# or
+helm upgrade --install loggen ./<path to helm ditrectory> --namespace monitoring
+
+```
+
+#### ------------------------------------------------------------------------------------------------####
 
 #### Accessing Prom from localhost
 
@@ -175,3 +204,7 @@ http://localhost:4080/targets
 ### Question for later
 
 1. Will namespace impact CoreDNS efficiency? 
+2. kube-prometheus-stack vs bare prometheus target tracking (via prometheus-community/ kube-prometheus-stack)
+      - later one: Kube-native use ServiceMonitor 
+      - Integration with K8s CRDs. 
+      - Recommneded (no need to reboot Prom)

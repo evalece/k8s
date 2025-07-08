@@ -1,11 +1,29 @@
 replicaCount: 1
+# 
+# Nested Struncture (enabling nested override for efficient provisioning); 
+# i.e, {{ aaa. bbb }} = value is the following 
+# aaa:
+#    bbb: value
+
 
 image:
+  name: log-generator
   repository: datapull
   tag: latest
   pullPolicy: IfNotPresent
 
-service:
+container:
+  name: loggen
   port: 8066
 
-containerPort: 8066
+
+service:
+  name: loggen
+  port: 8066
+  replicas: 1
+
+
+
+# Frequency of Prom polling and scrapping metrics
+endpoints:
+  scrape: 10s
