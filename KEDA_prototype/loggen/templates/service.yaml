@@ -6,11 +6,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.service.name }} 
+  name: {{ .Values.service.name }}  # name of service
+  labels:
+    app: {{ .Values.service.name }} # for grouping sources, and selector for matchLabels 
 spec:
   selector:
-    app: {{ .Values.service.name }} 
+    app: {{ .Values.service.name }}  # selector for pod management 
   ports:
-    - port: {{ .Values.service.port }}      
+    - name: {{ .Values.service.portName }}  # == http # to match with monitor
+      port: {{ .Values.service.port }}      
       targetPort: {{ .Values.container.port }}   # container port
   type: ClusterIP      # defined port<-> targetPort mapping type; others: NodePort (nodes on static IP) ,  Loadbalancer, ExternalName

@@ -7,7 +7,7 @@ replicaCount: 1
 
 
 image:
-  name: log-generator
+  name: loggen
   repository: datapull
   tag: latest
   pullPolicy: IfNotPresent
@@ -21,6 +21,8 @@ service:
   name: loggen
   port: 8066
   replicas: 1
+  portName: http
+  endPoint: /metrics
 
 
 

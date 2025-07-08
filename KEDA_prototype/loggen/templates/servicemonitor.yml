@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata: # Promp-kube prom Operator specific field
+  name: loggen-monitor # service name, independent from loggen
+  namespace: monitoring
+  labels:
+    release: prometheus # use this label for prom service to pick up from CoreDNS; prom need to specify itself with the same label
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.service.name }} # check to match service.metadata.label
+  endpoints:
+    - port: {{ .Values.service.portName }}  #http
+      path: {{ .Values.service.endPoints }} 
+      interval: {{ .Values.endpoints.scrape }}

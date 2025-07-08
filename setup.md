@@ -26,7 +26,7 @@ kubectl port-forward -n <namespace> <svc/pod/development>/name <local_port>:<tar
 
 ```
 
-### Access 
+#### Access 
 
 1. Start minikube at a terminal
 ```bash 
@@ -64,7 +64,7 @@ kubectl get pods -n keda
 
 ```
 
-### Creating a log generator Docker Image and Container 
+#### Creating a log generator Docker Image and Container 
 
 4. Create dockerfile on metric generator. 
 Side note on port routings:
@@ -150,18 +150,26 @@ helm install kube-prom-stack prometheus-community/kube-prometheus-stack \
   --namespace monitoring --create-namespace
 ```
 
-
-
-#### Accessing Prom from localhost
-
+- 4. Make sure the matchLabel is the same as target (example): 
 ```bash
-kubectl get svc -n monitoring 
-kubectl port-forward -n monitoring svc/prometheus-server 4080:80
+kubectl get prometheus -n monitoring -o yaml | grep -A 5 serviceMonitorSelector
+```
+- 5. Forward Ports to external:
+If see 9090/TCP,8080/TCP <=>  HTTP/ Web UI, internal readiness check and config
+```bash
+kubectl get svc --all-namespaces  
+kubectl port-forward -n monitoring svc/kube-prom-stack-kube-prome-prometheus 9090:9090
 ```
 
+#### Deploying loggen on to the cluster
 
+1. Install local Helm chart by passing Helm dir, then helm install or upgrade
 
+```bash 
+helm install loggen ./loggen --namespace monitoring
+helm upgrade loggen ./loggen --namespace monitoring
 
+```
 
 #### Configuring Auto scaling for KEDA
 
@@ -184,10 +192,11 @@ http://localhost:4080/targets
 ```
 
 
-### Question for later
+### Questions for later
 
 1. Will namespace impact CoreDNS efficiency? 
 2. kube-prometheus-stack vs bare prometheus target tracking (via prometheus-community/ kube-prometheus-stack)
       - later one: Kube-native use ServiceMonitor 
       - Integration with K8s CRDs. 
       - Recommneded (no need to reboot Prom)
+3. Ingress and NGinx https://kubernetes.io/docs/concepts/services-networking/ingress/ 

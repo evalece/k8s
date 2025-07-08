@@ -1,6 +1,11 @@
 prometheus:
-  prometheusSpec:
+  prometheusSpec: # probably no spec... 
+    serviceMonitorSelector:
+      matchLabels:
+        release: prometheus
+      
     serviceMonitorSelectorNilUsesHelmValues: false
+
 
 grafana:
   enabled: true

@@ -1,4 +1,4 @@
 apiVersion: v1
-name: log-generator
+name: loggen
 description: A simple Helm chart for a log generator service using the dataPull/latest image
 version: 0.1.0
